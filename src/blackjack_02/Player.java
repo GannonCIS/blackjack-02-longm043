@@ -20,7 +20,7 @@ public class Player {
     public Player(int playerNum){
         name = "Player"+ playerNum;  
     }
-    public Hand gertMyHand(){
+    public Hand getMyHand(){
          return myHand; 
     }
      

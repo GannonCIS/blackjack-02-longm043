@@ -31,11 +31,31 @@ public class Dealer {
     }
     
     public void dealOutOpeningHand(){
-        
+        for(int i = 0; i<2; i++){
+            for(Player currPlayer : myPlayers){
+                currPlayer.getMyHand().addCard(myDeck.dealCard()); 
+            }
+            dealerHand.addCard(myDeck.dealCard());
+        }
     }
     
     public void playOutPlayerHands(){
-        
+        for(Player currPlayer : myPlayers){
+            System.out.println("\n" + currPlayer.getName()+ "'s Hand");
+            currPlayer.getMyHand().printHand(); 
+            while(currPlayer.getMyHand().getNumOfCards()<5 &&
+                    currPlayer.getMyHand().getScore()<21){
+                System.out.println("\n" + currPlayer.getName() + " would you like to Hit?  (y/n)");
+                char opt = scan.next().toLowerCase().charAt(0);
+                if(opt == 'y'){
+                    currPlayer.getMyHand().addCard(myDeck.dealCard());
+                }else{
+                    break;
+                }
+                currPlayer.getMyHand().printHand();
+                System.out.println("\n");
+            }
+        }
     }
     
     public void playOutDealerHand(){
