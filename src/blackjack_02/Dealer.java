@@ -30,6 +30,13 @@ public class Dealer {
         initPlayers(num); 
     }
     
+    public void playGame(){
+        this.dealOutOpeningHand();
+        this.playOutPlayerHands();
+        this.playOutDealerHand();
+        this.declareWinner();
+    }
+    
     public void dealOutOpeningHand(){
         for(int i = 0; i<2; i++){
             for(Player currPlayer : myPlayers){
@@ -62,12 +69,35 @@ public class Dealer {
         while(dealerHand.getScore()<16 && dealerHand.getNumOfCards()<5){
             dealerHand.addCard(myDeck.dealCard());
         }
-        System.out.println("Dealer's Hand \n");
+        System.out.println("Dealer's Hand ");
         dealerHand.printHand();
     }
     
     public void declareWinner(){
         
+        for(int i =0 ; i < myPlayers.length; i++){
+            Player currPlayer = myPlayers[i]; 
+            System.out.println("\n" + currPlayer.getName() + "'s Hand");
+            currPlayer.getMyHand().printHand();
+            if(dealerHand.getScore()>21 || 
+                    currPlayer.getMyHand().getScore()>21){
+                if(currPlayer.getMyHand().getScore()>21){
+                    System.out.println(currPlayer.getName() + " you are busted");
+                }else{
+                    System.out.println(currPlayer.getName() + 
+                            "the dealer has busted, you have won");
+                }
+            }else if(dealerHand.getNumOfCards()>4 || dealerHand.getScore()==21){
+                System.out.println("The dealer has won, you all are losers ");
+            }else if(currPlayer.getMyHand().getNumOfCards()>4){
+                System.out.println(currPlayer.getName() + " you are the winner");
+            }else if(currPlayer.getMyHand().getScore() >
+                    dealerHand.getScore()){
+                System.out.println(currPlayer.getName()+ " has beaten the dealer");
+            }else{
+                System.out.println("You have lost to the dealer");
+            }
+        }
     }
     
     private void initPlayers(int numOfPlayers){
